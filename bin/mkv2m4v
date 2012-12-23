@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require 'mkv2m4v'
-Mkv2m4v::Command.new.convert
+Mkv2m4v::Command.new.run
