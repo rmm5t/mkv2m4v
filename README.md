@@ -25,7 +25,7 @@ It attempts to pass through as many codecs as possible.
 ## Background
 
 I got fed up with the reliability of the conversion tools out there for
-converting MKV video containers Apple TV compatible videos. Many of the
+converting MKV video containers to Apple TV compatible videos. Many of the
 existing tools appear to have potential on the surface, but they fail under
 certain scenarios.
 

@@ -20,14 +20,13 @@ module Mkv2m4v
 
     def convert_files
       $stderr.puts "Converting files is not yet supported. For now, try the --info option."
-      # each_file do |file|
+      # each_mediainfo do |info|
       # end
     end
 
     def print_info
-      each_file do |file|
-        info = Mediainfo.new file
-        puts "#{info.general.format}: #{file}"
+      each_mediainfo do |info|
+        puts "#{info.general.format}: #{info.filename}"
         info.video.count.times do |i|
           print_video_track(info.video[i])
         end
@@ -53,10 +52,10 @@ module Mkv2m4v
       puts "  Language: #{audio.language}"
     end
 
-    def each_file
-      ARGV.each do |file|
+    def each_mediainfo
+      @files.each do |file|
         if File.exists?(file)
-          yield file
+          yield Mediainfo.new(file)
         else
           $stderr.puts "#{file} does not exist."
         end
@@ -70,6 +69,7 @@ module Mkv2m4v
         banner [Mkv2m4v::Description, Mkv2m4v::Usage].join("\n")
         opt :info, "Print media info only"
       end
+      @files = ARGV
     end
   end
 end
