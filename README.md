@@ -22,6 +22,22 @@ It attempts to pass through as many codecs as possible.
 
     $ mkv2m4v some-video.mkv
 
+## Background
+
+I got fed up with the reliability of the conversion tools out there for
+converting MKV video containers Apple TV compatible videos. Many of the
+existing tools appear to have potential on the surface, but they fail under
+certain scenarios.
+
+[Handbrake](http://handbrake.fr/) is still the most realiable existing tool
+out there, but it re-encodes h.264 video tracks, which is not ideal and very
+slow.
+
+The goal is to get a better, more automated tool to accomplish the task of
+generating Apple TV compatible videos. Nothing more. It should generate an M4V
+media file with the best possible quality given the original source and the
+defaults should require no additional human interaction.
+
 ## Contributing
 
 1. Fork it
