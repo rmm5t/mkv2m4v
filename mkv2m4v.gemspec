@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["ryan@mcgeary.org"]
   gem.description   = Mkv2m4v::Description
   gem.summary       = %q{Makes Apple TV compatible videos}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/rmm5t/mkv2m4v"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
