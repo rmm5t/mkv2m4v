@@ -1,7 +1,7 @@
 # mkv2m4v
 
-Converts movies from MKV (Matroska Media Container) format into a format
-compatible with Apple TVs.
+Converts audio and video tracks from a MKV (Matroska Media Container)
+container into a format compatible with Apple TVs.
 
 It will attempt to pass thru as many codecs as possible.
 

@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Mkv2m4v::VERSION
   gem.authors       = ["Ryan McGeary"]
   gem.email         = ["ryan@mcgeary.org"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = Mkv2m4v::Description
+  gem.summary       = %q{Makes Apple TV compatible videos}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
@@ -17,5 +17,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency("thor", "~> 0.16")
+  gem.add_dependency("trollop", "~> 2.0")
+  gem.add_dependency("mediainfo", "~> 0.7")
 end
