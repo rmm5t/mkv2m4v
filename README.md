@@ -1,18 +1,18 @@
 # mkv2m4v
 
-Converts audio and video tracks from a MKV (Matroska Media Container)
-container into a format compatible with Apple TVs.
+Converts audio and video tracks from a MKV (Matroska Media) container into a
+format compatible with Apple TVs.
 
-It will attempt to pass thru as many codecs as possible.
+It attempts to pass through as many codecs as possible.
 
-* It assumes that the video track is already in H264.
+* It assumes that the video track is already in H.264/MPEG-4 (Advanced Video
+  Codec).
 * It will convert a DTS audio track into separate AAC and AC3 tracks.
-* If no DTS, it will pass thru the original AAC and AC3 tracks.
+* If no DTS, it will pass through the original AAC and/or AC3 tracks.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
+    $ brew install mediainfo
     $ gem install mkv2m4v
 
 ## Usage
