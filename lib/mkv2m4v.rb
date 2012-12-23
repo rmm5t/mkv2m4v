@@ -19,8 +19,9 @@ module Mkv2m4v
     private
 
     def convert_files
-      each_file do |file|
-      end
+      $stderr.puts "Converting files is not yet supported. For now, try the --info option."
+      # each_file do |file|
+      # end
     end
 
     def print_info
