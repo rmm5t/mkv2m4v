@@ -1,6 +1,7 @@
 require "mediainfo"
 require "forwardable"
 require "mkv2m4v/track"
+require "mkv2m4v/language_codes"
 
 module Mkv2m4v
   class File
@@ -9,8 +10,10 @@ module Mkv2m4v
     attr_reader :info, :video_tracks, :audio_tracks, :text_tracks
     def_delegator :info, :filename, :name
 
-    def initialize(filename)
+    def initialize(filename, options = {})
       @info = Mediainfo.new(filename)
+      @options = options
+      @language_code = LanguageCodes[@options[:lang]]
       init_tracks
     end
 
@@ -26,10 +29,10 @@ module Mkv2m4v
       puts
     end
 
-    def self.each(filenames)
+    def self.each(filenames, options = {})
       filenames.each do |filename|
         if ::File.exists?(filename)
-          yield new(filename)
+          yield new(filename, options)
         else
           $stderr.puts "#{filename} does not exist."
         end
@@ -39,27 +42,16 @@ module Mkv2m4v
     private
 
     def init_tracks
-      init_video_tracks
-      init_audio_tracks
-      init_text_tracks
+      @video_tracks = tracks_by_type(:video)
+      @audio_tracks = tracks_by_type(:audio)
+      @text_tracks  = tracks_by_type(:text)
     end
 
-    def init_video_tracks
-      @video_tracks = info.video.count.times.map do |i|
-        VideoTrack.new(info.video[i])
-      end
-    end
-
-    def init_audio_tracks
-      @audio_tracks = info.audio.count.times.map do |i|
-        AudioTrack.new(info.audio[i])
-      end
-    end
-
-    def init_text_tracks
-      @text_tracks = info.text.count.times.map do |i|
-        TextTrack.new(info.text[i])
-      end
+    def tracks_by_type(type)
+      tracks = info.send(type)
+      tracks.count.times.map do |i|
+        Mkv2m4v.const_get("#{type.capitalize}Track").new(tracks[i])
+      end.select { |track| track.matches_language?(@language_code) }
     end
   end
 end

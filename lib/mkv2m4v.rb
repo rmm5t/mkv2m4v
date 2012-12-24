@@ -27,7 +27,7 @@ module Mkv2m4v
     end
 
     def each_file
-      Mkv2m4v::File.each(@filenames) do |file|
+      Mkv2m4v::File.each(@filenames, @options) do |file|
         yield file
       end
     end
@@ -38,6 +38,7 @@ module Mkv2m4v
         version Mkv2m4v::VersionDescription
         banner [Mkv2m4v::Description, Mkv2m4v::Usage].join("\n")
         opt :info, "Print media info only"
+        opt :lang, "Preferred language", :type => :string, :default => "English"
       end
       @filenames = ARGV
     end

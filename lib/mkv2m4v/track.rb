@@ -1,5 +1,5 @@
 require "forwardable"
-require "mkv2m4v/language"
+require "mkv2m4v/language_codes"
 
 module Mkv2m4v
   class Track
@@ -17,12 +17,20 @@ module Mkv2m4v
       info["language"]
     end
 
+    def language_code
+      LanguageCodes[language]
+    end
+
     def title
       info["title"]
     end
 
     def format_description
       "#{format} (#{info.format_info}, #{info.codec_id})"
+    end
+
+    def matches_language?(code)
+      code.nil? || language_code.nil? || code == language_code
     end
   end
 
