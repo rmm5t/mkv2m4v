@@ -15,10 +15,16 @@ It attempts to pass through as many codecs as possible.
 
 ## Installation
 
-    $ brew install gpac
-    $ brew install ffmpeg --with-tools
+mkv2m4v is dependent upon `mediainfo`, `ffmpeg`, and `MP4Box`.
+
     $ brew install mediainfo
+    $ brew install gpac
     $ gem install mkv2m4v
+
+_Note: `gpac` includes `MP4Box` and is dependent on `ffmpeg`, so `ffmpeg`
+should install automatically. If not, you can manually install `ffmpeg`:_
+
+    $ brew install ffmpeg --with-tools
 
 ## Usage
 
