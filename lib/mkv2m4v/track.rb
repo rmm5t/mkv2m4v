@@ -1,4 +1,5 @@
 require "forwardable"
+require "mkv2m4v/language"
 
 module Mkv2m4v
   class Track
@@ -14,6 +15,10 @@ module Mkv2m4v
 
     def language
       info["language"]
+    end
+
+    def title
+      info["title"]
     end
 
     def format_description
@@ -34,6 +39,7 @@ module Mkv2m4v
       puts "  Resolution: #{resolution}"
       puts "  FPS:        #{fps}"
       puts "  Language:   #{language}"
+      puts "  Title:      #{title}"
     end
   end
 
@@ -62,6 +68,20 @@ module Mkv2m4v
       puts "  Channels:   #{channel_description}"
       puts "  Bit rate:   #{bit_rate_description}"
       puts "  Language:   #{language}"
+      puts "  Title:      #{title}"
+    end
+  end
+
+  class TextTrack < Track
+    def format_description
+      "#{format} (#{info.codec_id})"
+    end
+
+    def print
+      puts "Text Track #{id}:"
+      puts "  Format:     #{format_description}"
+      puts "  Language:   #{language}"
+      puts "  Title:      #{title}"
     end
   end
 end
