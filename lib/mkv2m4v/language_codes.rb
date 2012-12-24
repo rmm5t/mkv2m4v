@@ -4,18 +4,19 @@ module Mkv2m4v
   LanguageCodes = Hash.new
 
   def LanguageCodes.[](key)
-    key.respond_to?(:downcase) ? super(key.downcase) : super(key)
+    super(key.to_s.strip.downcase)
   end
 
   def LanguageCodes.[]=(key, value)
-    key.respond_to?(:downcase) ? super(key.downcase, value) : super(key, value)
+    super(key.to_s.strip.downcase, value)
   end
 
   ISO_639::ISO_639_1.each do |lang|
-    LanguageCodes[lang.alpha2] = lang.alpha2
-    LanguageCodes[lang.alpha3] = lang.alpha2
-    lang.english_name.split(/[,;]\s*/).each do |name|
-      LanguageCodes[name] = lang.alpha2
+    LanguageCodes[lang.alpha2] = lang.alpha3
+    LanguageCodes[lang.alpha3] = lang.alpha3
+    LanguageCodes[lang.alpha3_terminologic] = lang.alpha3
+    lang.english_name.split(/;\s*/).each do |name|
+      LanguageCodes[name] = lang.alpha3
     end
   end
 end
