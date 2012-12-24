@@ -19,4 +19,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency("trollop", "~> 2.0")
   gem.add_dependency("mediainfo", "~> 0.7")
+  gem.add_dependency("iso-639", "~> 0.1")
 end
