@@ -15,6 +15,8 @@ It attempts to pass through as many codecs as possible.
 
 ## Installation
 
+    $ brew install gpac
+    $ brew install ffmpeg --with-tools
     $ brew install mediainfo
     $ gem install mkv2m4v
 
