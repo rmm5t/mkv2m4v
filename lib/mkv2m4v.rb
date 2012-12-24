@@ -38,7 +38,7 @@ module Mkv2m4v
         version Mkv2m4v::VersionDescription
         banner [Mkv2m4v::Description, Mkv2m4v::Usage].join("\n")
         opt :info, "Print media info only"
-        opt :lang, "Preferred language", :type => :string, :default => "English"
+        opt :lang, "Preferred languages", :type => :strings, :default => ["English"]
       end
       @filenames = ARGV
     end

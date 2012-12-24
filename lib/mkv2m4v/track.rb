@@ -29,8 +29,8 @@ module Mkv2m4v
       "#{format} (#{info.format_info}, #{info.codec_id})"
     end
 
-    def matches_language?(code)
-      code.nil? || language_code.nil? || code == language_code
+    def matches_languages?(codes)
+      codes.nil? || codes.empty? || language_code.nil? || codes.include?(language_code)
     end
   end
 

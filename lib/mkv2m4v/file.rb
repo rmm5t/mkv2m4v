@@ -13,7 +13,7 @@ module Mkv2m4v
     def initialize(filename, options = {})
       @info = Mediainfo.new(filename)
       @options = options
-      @language_code = LanguageCodes[@options[:lang]]
+      @language_codes = @options[:lang].map { |lang| LanguageCodes[lang] }
       init_tracks
     end
 
@@ -51,7 +51,7 @@ module Mkv2m4v
       tracks = info.send(type)
       tracks.count.times.map do |i|
         Mkv2m4v.const_get("#{type.capitalize}Track").new(tracks[i])
-      end.select { |track| track.matches_language?(@language_code) }
+      end.select { |track| track.matches_languages?(@language_codes) }
     end
   end
 end
