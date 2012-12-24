@@ -1,7 +1,7 @@
+require "mkv2m4v/track"
 require "mediainfo"
 require "forwardable"
-require "mkv2m4v/track"
-require "mkv2m4v/language_codes"
+require "iso639"
 
 module Mkv2m4v
   class File
@@ -13,7 +13,7 @@ module Mkv2m4v
     def initialize(filename, options = {})
       @info = Mediainfo.new(filename)
       @options = options
-      @language_codes = @options[:lang].map { |lang| LanguageCodes[lang] }
+      @languages = @options[:languages]
       init_tracks
     end
 
@@ -51,7 +51,7 @@ module Mkv2m4v
       tracks = info.send(type)
       tracks.count.times.map do |i|
         Mkv2m4v.const_get("#{type.capitalize}Track").new(tracks[i])
-      end.select { |track| track.matches_languages?(@language_codes) }
+      end.select { |track| track.matches_languages?(@languages) }
     end
   end
 end

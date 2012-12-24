@@ -40,6 +40,7 @@ module Mkv2m4v
         opt :info, "Print media info only"
         opt :lang, "Preferred languages", :type => :strings, :default => ["English"]
       end
+      @options[:languages] = @options[:lang].map { |lang| Iso639[lang] }.compact
       @filenames = ARGV
     end
   end
