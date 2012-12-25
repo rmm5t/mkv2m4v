@@ -10,21 +10,13 @@ module Mkv2m4v
 
     def run
       if @options[:info]
-        print_info
+        each_file(&:print)
       else
-        convert_files
+        each_file(&:transcode)
       end
     end
 
     private
-
-    def convert_files
-      $stderr.puts "Converting files is not yet supported. For now, try the --info option."
-    end
-
-    def print_info
-      each_file(&:print)
-    end
 
     def each_file
       Mkv2m4v::File.each(@filenames, @options) do |file|
@@ -39,6 +31,8 @@ module Mkv2m4v
         banner [Mkv2m4v::Description, Mkv2m4v::Usage].join("\n")
         opt :info, "Print media info only"
         opt :lang, "Preferred languages", :type => :strings, :default => ["English"]
+        opt :dir, "Destination directory", :type => :string
+        opt :verbose, "More output", :type => :boolean
       end
       @options[:languages] = @options[:lang].map { |lang| Iso639[lang] }.compact
       @filenames = ARGV

@@ -23,21 +23,17 @@ module Mkv2m4v
     def format_description
       "#{format} (#{info.format_info}, #{info.codec_id})"
     end
-
-    def matches_languages?(languages)
-      language.nil? || languages.empty? || languages.include?(language)
-    end
   end
 
   class VideoTrack < Track
-    def_delegators :info, :frame_size, :interlaced?, :fps
+    def_delegators :info, :frame_size, :interlaced?, :fps, :width, :height
 
     def resolution
       "#{frame_size}#{interlaced? ? "i" : "p"}"
     end
 
     def print
-      puts "Video Track #{id}:"
+      puts "Track #{id}: (video)"
       puts "  Format:     #{format_description}"
       puts "  Resolution: #{resolution}"
       puts "  FPS:        #{fps}"
@@ -54,7 +50,7 @@ module Mkv2m4v
     end
 
     def bit_rate_kbps
-      info.bit_rate.gsub(/\D/, "").to_i
+      info.bit_rate.gsub(/\D/, "").to_i if info.bit_rate
     end
 
     def channel_description
@@ -66,7 +62,7 @@ module Mkv2m4v
     end
 
     def print
-      puts "Audio Track #{id}:"
+      puts "Track #{id}: (audio)"
       puts "  Format:     #{format_description}"
       puts "  Channels:   #{channel_description}"
       puts "  Bit rate:   #{bit_rate_description}"
@@ -81,7 +77,7 @@ module Mkv2m4v
     end
 
     def print
-      puts "Text Track #{id}:"
+      puts "Track #{id}: (text)"
       puts "  Format:     #{format_description}"
       puts "  Language:   #{language}"
       puts "  Title:      #{title}"
