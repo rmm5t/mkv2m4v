@@ -72,9 +72,9 @@ module Mkv2m4v
     def tracks_by_type(type)
       info_tracks = info.send(type)
       tracks = info_tracks.count.times.map do |i|
-        Mkv2m4v.const_get("#{type.capitalize}Track").new(info_tracks[i])
+        Mkv2m4v.const_get("#{type.to_s.capitalize}Track").new(info_tracks[i])
       end
-      Mkv2m4v.const_get("#{type.capitalize}Ranker").new(tracks, @options)
+      Mkv2m4v.const_get("#{type.to_s.capitalize}Ranker").new(tracks, @options)
     end
   end
 end
