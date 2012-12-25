@@ -1,3 +1,5 @@
+require "colorize"
+
 module Mkv2m4v
   class Transcoder
     def initialize(file, options = {})
@@ -22,41 +24,41 @@ module Mkv2m4v
     end
 
     def extract
-      puts "==> Extracting #{video_id}:video.#{video_ext} #{audio_id}:audio.#{audio_ext} "
+      puts "==> Extracting #{video_id}:video.#{video_ext} #{audio_id}:audio.#{audio_ext} ".magenta
       system "mkvextract tracks #{@file.filename.inspect} #{video_id}:#{video_file} #{audio_id}:#{audio_file}"
     end
 
     def transcode_avc
       if video_format == "AVC"
-        puts "==> Assuming pass through for h.264 video track"
+        puts "==> Assuming pass through for h.264 video track".yellow.on_black
       else
-        puts "==> ERROR: Wrong Video format"
+        puts "==> ERROR: Wrong Video format".white.on_red
       end
     end
 
     def transcode_aac
       if audio_format == "AAC"
-        puts "==> Assuming pass through for AAC audio track"
+        puts "==> Assuming pass through for AAC audio track".yellow.on_black
       else
-        puts "==> Transcoding #{audio_format} to Stereo AAC audio track"
+        puts "==> Transcoding #{audio_format} to Stereo AAC audio track".magenta
         system "ffmpeg -i #{audio_file.inspect} -acodec libfaac -ac 2 -ab 160k #{audio_basename}.aac"
       end
     end
 
     def transcode_ac3
       if audio_format == "AC-3"
-        puts "==> Assuming pass through for AC-3 audio track"
+        puts "==> Assuming pass through for AC-3 audio track".yellow.on_black
       elsif audio_format == "AAC"
-        puts "==> Skipping AC-3 surround audio track"
+        puts "==> Skipping AC-3 surround audio track".yellow.on_black
         @skip_ac3 = true
       else
-        puts "==> Transcoding #{audio_format} to Aurround AC-3 audio track"
+        puts "==> Transcoding #{audio_format} to Surround AC-3 audio track".magenta
         system "ffmpeg -i #{audio_file.inspect} -acodec ac3 -ac #{max_audio_channels} -ab #{max_audio_bit_rate}k #{audio_basename}.ac3"
       end
     end
 
     def remux
-      puts "==> Remuxing everything into an M4V container (#{m4v_file})"
+      puts "==> Remuxing everything into an M4V container".magenta
       command = "MP4Box"
       command << " -add #{video_basename.inspect}.h264:lang=en:name=\"AVC Video\" "
       command << " -add #{audio_basename.inspect}.aac:lang=en:group=1:delay=84:name=\"Stereo\" "

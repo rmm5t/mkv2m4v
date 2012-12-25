@@ -4,6 +4,7 @@ require "mkv2m4v/transcoder"
 require "mediainfo"
 require "forwardable"
 require "iso639"
+require "colorize"
 
 module Mkv2m4v
   class File
@@ -26,7 +27,7 @@ module Mkv2m4v
     end
 
     def print
-      puts "#{format}: #{name}"
+      puts "#{format}: #{name}".black.on_yellow
       video_tracks.filter.each(&:print) if @options[:verbose]
       audio_tracks.filter.each(&:print) if @options[:verbose]
       text_tracks.filter.each(&:print)  if @options[:verbose]
@@ -35,7 +36,7 @@ module Mkv2m4v
     end
 
     def transcode
-      puts "#{format}: #{name}"
+      puts "#{format}: #{name}".black.on_yellow
       Transcoder.new(self, @options).run
       puts
     end
