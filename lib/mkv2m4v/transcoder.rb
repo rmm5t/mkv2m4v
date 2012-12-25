@@ -1,3 +1,4 @@
+require "fileutils"
 require "colorize"
 
 module Mkv2m4v
