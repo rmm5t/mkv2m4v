@@ -15,11 +15,12 @@ It attempts to pass through as many codecs as possible.
 
 ## Installation
 
-mkv2m4v is dependent upon `mediainfo`, `ffmpeg`, and `MP4Box`.
+mkv2m4v is dependent upon `mediainfo`, `mkvextract`, `ffmpeg`, and `MP4Box`.
 
 ```bash
 $ brew install mediainfo
 $ brew install gpac
+$ brew install mkvtoolnix
 $ gem install mkv2m4v
 ```
 
