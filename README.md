@@ -1,6 +1,3 @@
-**This gem is a work in progress.** Do not expect any supported functionality
-until v0.1.0.
-
 # mkv2m4v
 
 Converts audio and video tracks from a MKV (Matroska Media) container into a
