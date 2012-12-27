@@ -31,7 +31,6 @@ module Mkv2m4v
         opt :info, "Print media info only"
         opt :lang, "Preferred languages, comma separated", :type => :string, :default => "English"
         opt :dir, "Destination directory", :type => :string
-        opt :verbose, "More output", :type => :boolean
       end
       parse_languages
       @filenames = ARGV
