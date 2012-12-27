@@ -57,8 +57,11 @@ module Mkv2m4v
   end
 
   class TextRanker < TrackRanker
-    # scoring not implemented yet
-    # def score(track)
-    # end
+    def score(track)
+      score = 0
+      score += 3 if track == first
+      score += 4 if language_match?(track)
+      score
+    end
   end
 end
