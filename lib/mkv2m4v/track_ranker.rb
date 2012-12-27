@@ -17,7 +17,7 @@ module Mkv2m4v
     end
 
     def rank
-      ranked_tracks = @tracks.sort_by { |t| score(t) }.reverse
+      ranked_tracks = @tracks.sort_by { |t| -score(t) }
       self.class.new(ranked_tracks, @options)
     end
 
