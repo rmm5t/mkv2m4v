@@ -10,7 +10,7 @@ module Mkv2m4v
 
     def run
       if @options[:info]
-        each_file(&:print)
+        each_file(&:print_info)
       else
         each_file(&:transcode)
       end

@@ -32,8 +32,8 @@ module Mkv2m4v
       "#{frame_size}#{interlaced? ? "i" : "p"}"
     end
 
-    def print
-      puts "Track #{id}: (video)"
+    def print(color = nil)
+      puts "Video Track ##{id}:".colorize(color)
       puts "  Format:     #{format_description}"
       puts "  Resolution: #{resolution}"
       puts "  FPS:        #{fps}"
@@ -61,8 +61,8 @@ module Mkv2m4v
       "#{bit_rate_kbps}k (#{info.bit_rate_mode})"
     end
 
-    def print
-      puts "Track #{id}: (audio)"
+    def print(color = nil)
+      puts "Audio Track ##{id}:".colorize(color)
       puts "  Format:     #{format_description}"
       puts "  Channels:   #{channel_description}"
       puts "  Bit rate:   #{bit_rate_description}"
@@ -76,8 +76,8 @@ module Mkv2m4v
       "#{format} (#{info.codec_id})"
     end
 
-    def print
-      puts "Track #{id}: (text)"
+    def print(color = nil)
+      puts "Text Track ##{id}:".colorize(color)
       puts "  Format:     #{format_description}"
       puts "  Language:   #{language}"
       puts "  Title:      #{title}"

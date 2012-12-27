@@ -11,7 +11,8 @@ module Mkv2m4v
     extend Forwardable
 
     attr_reader :info, :video_tracks, :audio_tracks, :text_tracks
-    attr_reader :ideal_video_track, :ideal_audio_track
+    attr_reader :info, :filtered_video_tracks, :filtered_audio_tracks, :filtered_text_tracks
+    attr_reader :ideal_video_track, :ideal_audio_track, :ideal_text_track
     def_delegator :info, :filename, :name
     def_delegator :info, :full_filename, :filename
 
@@ -26,19 +27,17 @@ module Mkv2m4v
       info.general.format
     end
 
-    def print
-      puts "#{format}: #{name}".black.on_yellow
-      video_tracks.filter.each(&:print) if @options[:verbose]
-      audio_tracks.filter.each(&:print) if @options[:verbose]
-      text_tracks.filter.each(&:print)  if @options[:verbose]
-      print_ideal_tracks
-      puts
+    def print_info
+      process do
+        print_filtered_tracks
+      end
     end
 
     def transcode
-      puts "#{format}: #{name}".black.on_yellow
-      Transcoder.new(self, @options).run
-      puts
+      process do
+        print_ideal_tracks
+        Transcoder.new(self, @options).run
+      end
     end
 
     def self.each(filenames, options = {})
@@ -53,20 +52,59 @@ module Mkv2m4v
 
     private
 
+    def process
+      preamble
+      yield
+      postamble
+    end
+
+    def preamble
+      print "#{format}: #{name}".black.on_yellow
+      langs = @languages.empty? ? "all languages" : @languages.join(", ")
+      puts " (matching #{langs})".yellow.on_black
+    end
+
+    def postamble
+      puts
+    end
+
+    def print_all_tracks
+      video_tracks.each(&:print)
+      audio_tracks.each(&:print)
+      text_tracks.each(&:print)
+    end
+
+    HIGHLIGHT_COLOR = { :background => :cyan }
+
+    def print_filtered_tracks
+      filtered_video_tracks.each do |t|
+        t.print t == ideal_video_track && HIGHLIGHT_COLOR
+      end
+      filtered_audio_tracks.each do |t|
+        t.print t == ideal_audio_track && HIGHLIGHT_COLOR
+      end
+      filtered_text_tracks.each do |t|
+        t.print t == ideal_text_track && HIGHLIGHT_COLOR
+      end
+    end
+
     def print_ideal_tracks
-      puts "==> Ideal video track"
-      @ideal_video_track.print
-      puts "==> Ideal audio track"
-      @ideal_audio_track.print
+      ideal_video_track.print HIGHLIGHT_COLOR
+      ideal_audio_track.print HIGHLIGHT_COLOR
     end
 
     def init_tracks
-      @video_tracks = tracks_by_type(:video)
-      @audio_tracks = tracks_by_type(:audio)
-      @text_tracks  = tracks_by_type(:text)
+      @video_tracks = tracks_by_type(:video).rank
+      @audio_tracks = tracks_by_type(:audio).rank
+      @text_tracks  = tracks_by_type(:text).rank
 
-      @ideal_video_track = video_tracks.filter.rank.first
-      @ideal_audio_track = audio_tracks.filter.rank.first
+      @filtered_video_tracks = video_tracks.filter
+      @filtered_audio_tracks = audio_tracks.filter
+      @filtered_text_tracks  = text_tracks.filter
+
+      @ideal_video_track = filtered_video_tracks.first
+      @ideal_audio_track = filtered_audio_tracks.first
+      @ideal_text_track  = filtered_text_tracks.first
     end
 
     def tracks_by_type(type)
