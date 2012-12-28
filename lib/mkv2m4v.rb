@@ -30,7 +30,7 @@ module Mkv2m4v
         banner [Mkv2m4v::Description, Mkv2m4v::Usage].join("\n")
         opt :info, "Print media info only"
         opt :lang, "Preferred languages, comma separated", :type => :string, :default => "English"
-        opt :dir, "Destination directory", :type => :string
+        opt :dir, "Destination directory (default: same dir as source mkv)", :type => :string
       end
       parse_languages
       @filenames = ARGV
