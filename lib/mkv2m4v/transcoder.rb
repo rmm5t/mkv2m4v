@@ -1,6 +1,7 @@
 require "fileutils"
 require "colorize"
 require "shellwords"
+require "iso639/language"
 
 module Mkv2m4v
   class Transcoder
@@ -74,12 +75,13 @@ module Mkv2m4v
     def remux
       puts "==> Remuxing everything into an M4V container".magenta
       command = "MP4Box"
-      command << " -add #{escape(video_basename)}.h264:lang=en:name=\"AVC Video\""
-      command << " -add #{escape(audio_basename)}.aac:lang=en:group=1:delay=84:name=\"Stereo\""
+      command << " -add #{escape(video_basename)}.h264:lang=#{video_language.alpha3_terminology}:name=\"AVC Video\""
+      command << " -add #{escape(audio_basename)}.aac:lang=#{audio_language.alpha3_terminology}:group=1:delay=84:name=\"Stereo\""
       unless @skip_ac3
-        command << " -add #{escape(audio_basename)}.ac3:lang=en:group=1:delay=84:disable:name=\"AC3\" "
+        command << " -add #{escape(audio_basename)}.ac3:lang=#{audio_language.alpha3_terminology}:group=1:delay=84:disable:name=\"AC3\" "
       end
       command << " -new #{escape(m4v_file)}"
+      puts command
       system command
     end
 
@@ -111,6 +113,10 @@ module Mkv2m4v
       end
     end
 
+    def video_language
+      @file.ideal_video_track.language || @options[:languages].first || UnknownLanguage
+    end
+
     def audio_basename
       ::File.join(tmp_dir, "audio")
     end
@@ -129,6 +135,10 @@ module Mkv2m4v
 
     def audio_ext
       audio_format.gsub(/\W/, "").downcase
+    end
+
+    def audio_language
+      @file.ideal_audio_track.language || @options[:languages].first || UnknownLanguage
     end
 
     def max_audio_channels
@@ -154,5 +164,7 @@ module Mkv2m4v
     def escape(str)
       Shellwords.escape(str)
     end
+
+    UnknownLanguage = Iso639::Language.new("", "", "", "", "")
   end
 end
