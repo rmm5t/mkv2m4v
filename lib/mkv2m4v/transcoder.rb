@@ -1,5 +1,6 @@
 require "fileutils"
 require "colorize"
+require "shellwords"
 
 module Mkv2m4v
   class Transcoder
@@ -26,7 +27,11 @@ module Mkv2m4v
 
     def extract
       puts "==> Extracting #{video_id}:video.#{video_ext} #{audio_id}:audio.#{audio_ext} ".magenta
-      system "mkvextract tracks #{@file.filename.inspect} #{video_id}:#{video_file} #{audio_id}:#{audio_file}"
+      command = "mkvextract tracks"
+      command << " #{escape(@file.filename)}"
+      command << " #{video_id}:#{escape(video_file)}"
+      command << " #{audio_id}:#{escape(audio_file)}"
+      system command
     end
 
     def transcode_avc
@@ -42,7 +47,11 @@ module Mkv2m4v
         puts "==> Assuming pass through for AAC audio track".yellow.on_black
       else
         puts "==> Transcoding #{audio_format} to Stereo AAC audio track".magenta
-        system "ffmpeg -i #{audio_file.inspect} -acodec libfaac -ac 2 -ab 160k #{audio_basename}.aac"
+        command = "ffmpeg"
+        command << " -i #{escape(audio_file)}"
+        command << " -acodec libfaac -ac 2 -ab 160k"
+        command << " #{escape(audio_basename)}.aac"
+        system command
       end
     end
 
@@ -54,19 +63,23 @@ module Mkv2m4v
         @skip_ac3 = true
       else
         puts "==> Transcoding #{audio_format} to Surround AC-3 audio track".magenta
-        system "ffmpeg -i #{audio_file.inspect} -acodec ac3 -ac #{max_audio_channels} -ab #{max_audio_bit_rate}k #{audio_basename}.ac3"
+        command = "ffmpeg"
+        command << " -i #{escape(audio_file)}"
+        command << " -acodec ac3 -ac #{max_audio_channels} -ab #{max_audio_bit_rate}k"
+        command << " #{escape(audio_basename)}.ac3"
+        system command
       end
     end
 
     def remux
       puts "==> Remuxing everything into an M4V container".magenta
       command = "MP4Box"
-      command << " -add #{video_basename.inspect}.h264:lang=en:name=\"AVC Video\" "
-      command << " -add #{audio_basename.inspect}.aac:lang=en:group=1:delay=84:name=\"Stereo\" "
+      command << " -add #{escape(video_basename)}.h264:lang=en:name=\"AVC Video\""
+      command << " -add #{escape(audio_basename)}.aac:lang=en:group=1:delay=84:name=\"Stereo\""
       unless @skip_ac3
-        command << " -add #{audio_basename.inspect}.ac3:lang=en:group=1:delay=84:disable:name=\"AC3\" "
+        command << " -add #{escape(audio_basename)}.ac3:lang=en:group=1:delay=84:disable:name=\"AC3\" "
       end
-      command << " -new #{m4v_file.inspect}"
+      command << " -new #{escape(m4v_file)}"
       system command
     end
 
@@ -136,6 +149,10 @@ module Mkv2m4v
 
     def m4v_file
       ::File.join(dir, ::File.basename(@file.name, ".*") + ".m4v")
+    end
+
+    def escape(str)
+      Shellwords.escape(str)
     end
   end
 end
