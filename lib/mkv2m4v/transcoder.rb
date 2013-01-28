@@ -32,7 +32,7 @@ module Mkv2m4v
       command << " #{escape(@file.filename)}"
       command << " #{video_id}:#{escape(video_file)}"
       command << " #{audio_id}:#{escape(audio_file)}"
-      system command
+      sh command
     end
 
     def transcode_avc
@@ -52,7 +52,7 @@ module Mkv2m4v
         command << " -i #{escape(audio_file)}"
         command << " -acodec libfaac -ac 2 -ab 160k"
         command << " #{escape(audio_basename)}.aac"
-        system command
+        sh command
       end
     end
 
@@ -68,7 +68,7 @@ module Mkv2m4v
         command << " -i #{escape(audio_file)}"
         command << " -acodec ac3 -ac #{max_audio_channels} -ab #{max_audio_bit_rate}k"
         command << " #{escape(audio_basename)}.ac3"
-        system command
+        sh command
       end
     end
 
@@ -81,8 +81,7 @@ module Mkv2m4v
         command << " -add #{escape(audio_basename)}.ac3:lang=#{audio_language.alpha3_terminology}:group=1:delay=84:disable:name=\"AC3\" "
       end
       command << " -new #{escape(m4v_file)}"
-      puts command
-      system command
+      sh command
     end
 
     def cleanup
@@ -163,6 +162,11 @@ module Mkv2m4v
 
     def escape(str)
       Shellwords.escape(str)
+    end
+
+    def sh(command)
+      puts command
+      system command
     end
 
     UnknownLanguage = Iso639::Language.new("", "", "", "", "")
