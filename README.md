@@ -1,4 +1,4 @@
-# mkv2m4v
+# mkv2m4v [![Gem Version](https://badge.fury.io/rb/mkv2m4v.png)](http://badge.fury.io/rb/mkv2m4v)
 
 Converts audio and video tracks from a MKV (Matroska Media) container into a
 format compatible with Apple TVs.
