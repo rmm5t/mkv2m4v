@@ -1,5 +1,5 @@
 module Mkv2m4v
-  VERSION = "0.3.0"
+  VERSION = "0.3.1"
 
   VersionDescription = "mkv2m4v #{VERSION} (c) 2012-2013 Ryan McGeary"
   Description = <<EOS
