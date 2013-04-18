@@ -52,6 +52,7 @@ module Mkv2m4v
       score += (track.channel_count || 0) / 8.0 * 2.0
       score += (track.bit_rate_kbps || 0) / 1500.0 * 2.0
       score += 4 if language_match?(track)
+      score *= -1 unless ["DTS", "AC-3", "AAC"].include?(track.format)
       score
     end
   end
