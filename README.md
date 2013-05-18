@@ -10,6 +10,11 @@ It attempts to pass through as many codecs as possible.
 * It will convert a DTS audio track into separate AAC and AC3 tracks.
 * If no DTS, it will pass through the original AAC and/or AC3 tracks.
 
+**If you like this project, please help by donating.**
+
+* Gittip: https://www.gittip.com/rmm5t/
+* Bitcoin: `1wzBnMjWVZfpiFMc5i2nzKT7sCBaZNfLK`
+
 ## Installation
 
 mkv2m4v is dependent upon `mediainfo`, `mkvextract`, `ffmpeg`, and `MP4Box`.
