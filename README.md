@@ -1,4 +1,4 @@
-# mkv2m4v [![Gem Version](https://badge.fury.io/rb/mkv2m4v.png)](http://badge.fury.io/rb/mkv2m4v) [![Code Climate](https://codeclimate.com/github/rmm5t/mkv2m4v.png)](https://codeclimate.com/github/rmm5t/mkv2m4v)
+# mkv2m4v [![Gem Version](http://img.shields.io/gem/v/mkv2m4v.svg)](https://rubygems.org/gems/mkv2m4v) [![Code Climate](http://img.shields.io/codeclimate/github/rmm5t/mkv2m4v.svg)](https://codeclimate.com/github/rmm5t/mkv2m4v)
 
 Converts audio and video tracks from a MKV (Matroska Media) container into a
 format compatible with Apple TVs.
