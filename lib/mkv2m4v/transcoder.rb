@@ -97,7 +97,7 @@ module Mkv2m4v
     end
 
     def video_id
-      @file.ideal_video_track.id
+      @file.ideal_video_track.id.to_i - 1
     end
 
     def video_format
@@ -125,7 +125,7 @@ module Mkv2m4v
     end
 
     def audio_id
-      @file.ideal_audio_track.id
+      @file.ideal_audio_track.id.to_i - 1
     end
 
     def audio_format

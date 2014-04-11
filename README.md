@@ -22,7 +22,7 @@ mkv2m4v is dependent upon `mediainfo`, `mkvextract`, `ffmpeg`, and `MP4Box`.
 ```bash
 $ brew install mediainfo
 $ brew install gpac
-$ brew install mkvtoolnix
+$ brew install mkvtoolnix # version >= 6 required
 $ gem install mkv2m4v
 ```
 
