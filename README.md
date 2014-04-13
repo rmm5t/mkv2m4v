@@ -34,6 +34,13 @@ should install automatically. If not, you should manually install `ffmpeg`:_
 $ brew install ffmpeg --with-tools
 ```
 
+If you have any trouble after installing the mkdv2m4v gem, you can test the
+dependencies using the `--check` argument:
+
+```bash
+$ mkv2m4v --check
+```
+
 ## Usage
 
 ```bash
