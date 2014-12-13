@@ -33,22 +33,17 @@ It attempts to pass through as many codecs as possible.
 
 ## Installation
 
-mkv2m4v is dependent upon `mediainfo`, `mkvextract`, `ffmpeg`, and `MP4Box`.
+mkv2m4v is dependent upon `mediainfo`, `ffmpeg`, `mkvextract`, and `MP4Box`.
 
 ```bash
 $ brew install mediainfo
+$ brew install ffmpeg --with-tools --with-fdk-aac
 $ brew install gpac
 $ brew install mkvtoolnix # version >= 6 required
 $ gem install mkv2m4v
 ```
 
-_Note: `gpac` includes `MP4Box` and is dependent on `ffmpeg`, so `ffmpeg`
-should install automatically. If not, you should manually install `ffmpeg`:_
-
-```bash
-# ffmpeg should already be installed, but just in case:
-$ brew install ffmpeg --with-tools
-```
+_Note: `gpac` includes `MP4Box`:_
 
 If you have any trouble after installing the mkdv2m4v gem, you can test the
 dependencies using the `--check` argument:
