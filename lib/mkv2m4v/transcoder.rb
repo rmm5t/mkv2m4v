@@ -50,7 +50,7 @@ module Mkv2m4v
         puts "==> Transcoding #{audio_format} to Stereo AAC audio track".magenta
         command = "ffmpeg"
         command << " -i #{escape(audio_file)}"
-        command << " -acodec libfaac -ac 2 -ab 160k"
+        command << " -acodec libfdk_aac -ac 2 -ab 160k"
         command << " #{escape(audio_basename)}.aac"
         sh command
       end
