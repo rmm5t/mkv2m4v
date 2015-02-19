@@ -108,7 +108,7 @@ module Mkv2m4v
       if video_format == "AVC"
         "h264"
       else
-        video_format.gsub(/\W/, "").downcase
+        video_format.to_s.gsub(/\W/, "").downcase
       end
     end
 
@@ -133,7 +133,7 @@ module Mkv2m4v
     end
 
     def audio_ext
-      audio_format.gsub(/\W/, "").downcase
+      audio_format.to_s.gsub(/\W/, "").downcase
     end
 
     def audio_language
