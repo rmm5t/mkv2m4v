@@ -1,7 +1,7 @@
 # mkv2m4v
 
 [![Gem Version](http://img.shields.io/gem/v/mkv2m4v.svg)](https://rubygems.org/gems/mkv2m4v)
-[![Code Climate](http://img.shields.io/codeclimate/github/rmm5t/mkv2m4v.svg)](https://codeclimate.com/github/rmm5t/mkv2m4v)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ad9bc0afa9d14818df50/maintainability)](https://codeclimate.com/github/rmm5t/mkv2m4v/maintainability)
 [![Gem Downloads](https://img.shields.io/gem/dt/mkv2m4v.svg)](https://rubygems.org/gems/mkv2m4v)
 
 Converts audio and video tracks from a MKV (Matroska Media) container into a
